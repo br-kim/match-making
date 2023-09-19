@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+uvicorn = "*"
+apscheduler = "*"
+jinja2 = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
