@@ -12,7 +12,8 @@
     <input id="userIdInput" type="text">
     <input id="ticketContainer" type="hidden">
 </label>
-<button class="btn btn-primary" id="matchingRegisterBtn">매칭 등록</button>
+<button class="btn btn-primary" id="matching1vs1RegisterBtn">1vs1 매칭 등록</button>
+<button class="btn btn-primary" id="matching2vs2RegisterBtn">2vs2 매칭 등록</button>
 <button class="btn btn-danger" id="matchingStopBtn">매칭 중단</button>
 <div id="matchingStatus" hidden></div>
 <script>
@@ -24,11 +25,11 @@
         return document.getElementById("ticketContainer").value
     }
 
-    async function registerMatching() {
+    async function registerMatching(gameType) {
         document.getElementById("ticketContainer").value = crypto.randomUUID()
         body = {
             user_id: getUserId(),
-            game_type: "1vs1",
+            game_type: gameType,
             ticket: getTicket()
         }
         header = {
@@ -82,7 +83,12 @@
         })
     }
 
-    document.getElementById("matchingRegisterBtn").addEventListener("click", registerMatching)
+    document.getElementById("matching1vs1RegisterBtn").addEventListener("click", async () => {
+        await registerMatching("1vs1")
+    })
+    document.getElementById("matching2vs2RegisterBtn").addEventListener("click", async () => {
+        await registerMatching("2vs2")
+    })
     document.getElementById("matchingStopBtn").addEventListener("click", stopMatching)
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

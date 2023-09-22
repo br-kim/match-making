@@ -6,7 +6,7 @@ from fastapi import FastAPI
 
 from routers import index_router, match_router, user_router
 from database import Base, engine
-from schedule import game_matching_1vs1
+from schedule import game_matching_1vs1, game_matching_2vs2
 
 app = FastAPI()
 app.include_router(index_router)
@@ -16,10 +16,11 @@ app.include_router(user_router)
 
 @app.on_event("startup")
 async def startup_event():
-    print("start")
     Base.metadata.create_all(engine)
     scheduler = BackgroundScheduler()
     scheduler.add_job(game_matching_1vs1, "interval", seconds=5)
+    scheduler.add_job(game_matching_2vs2, "interval", seconds=5)
+
     scheduler.start()
 
 

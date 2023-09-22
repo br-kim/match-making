@@ -21,3 +21,13 @@ class MatchMakingInfo(Base):
     game_type = Column(String)
     room_id = Column(String)
     ticket = Column(String)
+    team = Column(String)
+
+
+class UserMatchingFactor(Base):
+    __tablename__ = "user_matching_factor"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(String, ForeignKey("user.user_id"))
+    waiting = Column(Integer, default=0)
+    user = relationship("User", backref="matching_factor")
