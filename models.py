@@ -11,6 +11,7 @@ class User(Base):
     user_id = Column(String, index=True, nullable=False, unique=True)
     mmr = Column(Integer, index=True)
     match_making_info = relationship("MatchMakingInfo", backref="user")
+    matching_factor = relationship("UserMatchingFactor", uselist=False)
 
 
 class MatchMakingInfo(Base):
@@ -30,4 +31,3 @@ class UserMatchingFactor(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(String, ForeignKey("user.user_id"))
     waiting = Column(Integer, default=0)
-    user = relationship("User", backref="matching_factor")

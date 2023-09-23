@@ -22,6 +22,12 @@ def create_match_making(db: Session, user_id, game_type, ticket):
         user_id=user_id, game_type=game_type, ticket=ticket
     )
     db.add(match_making_info)
+    user_match_making_factor = (
+        db.query(models.UserMatchingFactor)
+        .filter(models.UserMatchingFactor.user_id == user_id)
+        .first()
+    )
+    user_match_making_factor.waiting = 0
     db.commit()
     return match_making_info
 
@@ -29,7 +35,7 @@ def create_match_making(db: Session, user_id, game_type, ticket):
 def delete_match_making(db: Session, user_id):
     db.query(models.MatchMakingInfo).filter(
         models.MatchMakingInfo.user_id == user_id,
-        models.MatchMakingInfo.room_id.isnot(None),
+        models.MatchMakingInfo.room_id.is_(None),
     ).delete()
     db.commit()
 

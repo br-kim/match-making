@@ -18,8 +18,8 @@ app.include_router(user_router)
 async def startup_event():
     Base.metadata.create_all(engine)
     scheduler = BackgroundScheduler()
-    scheduler.add_job(game_matching_1vs1, "interval", seconds=5)
-    scheduler.add_job(game_matching_2vs2, "interval", seconds=5)
+    scheduler.add_job(game_matching_1vs1, "interval", seconds=10)
+    scheduler.add_job(game_matching_2vs2, "interval", seconds=10)
 
     scheduler.start()
 
