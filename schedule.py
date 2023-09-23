@@ -8,6 +8,10 @@ from dependencies import get_db
 
 
 def game_matching_1vs1():
+    """
+    1vs1 매칭
+    :return:
+    """
     db = next(get_db())
     match_making_info_list = crud.get_match_making_by_game_type(db=db, game_type="1vs1")
     matched_user_id_set = set()
@@ -42,6 +46,10 @@ def game_matching_1vs1():
 
 
 def game_matching_2vs2():
+    """
+    2vs2 매칭
+    :return:
+    """
     db = next(get_db())
     match_making_info_list = crud.get_match_making_by_game_type(db=db, game_type="2vs2")
     if len(match_making_info_list) >= 4:
@@ -72,12 +80,22 @@ def game_matching_2vs2():
 
 
 def calculate_1vs1_matching_correction(user1: models.User):
+    """
+    1vs1 매칭 보정 계산 함수
+    :param user1:
+    :return:
+    """
     default_correction = 50
     user1_waiting = min(10, user1.matching_factor.waiting)
     return default_correction + user1_waiting
 
 
 def calculate_2vs2_matching_correction(users: List[models.User]):
+    """
+    2vs2 매칭 보정 계산 함수
+    :param users:
+    :return:
+    """
     default_correction = 100
     result = 0
     for user in users:

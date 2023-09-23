@@ -8,4 +8,9 @@ templates = Jinja2Templates(directory="templates")
 
 @index_router.get("/")
 async def main(request: Request):
+    """
+    메인 페이지 리턴
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse("main.html", {"request": request})

@@ -18,14 +18,17 @@
 <div id="matchingStatus" hidden></div>
 <script>
     function getUserId() {
+        // 유저 ID 읽어옴
         return document.getElementById("userIdInput").value
     }
 
     function getTicket() {
+        // 매칭 요청용 티켓 읽어옴
         return document.getElementById("ticketContainer").value
     }
 
     async function registerMatching(gameType) {
+        // 매칭 등록
         document.getElementById("ticketContainer").value = crypto.randomUUID()
         body = {
             user_id: getUserId(),
@@ -47,6 +50,7 @@
     }
 
     function timeoutPolling(func, timeout) {
+        //매칭 결과 조회를 위한 polling
         let matchingStatus = document.getElementById("matchingStatus").innerText
         console.log(matchingStatus);
         if (matchingStatus === "stop") {
@@ -63,6 +67,7 @@
     }
 
     async function getMatchingStatus() {
+        // 매칭 결과 조회
         res = await fetch(`/match/result?ticket=${getTicket()}`);
         resJson = await res.json();
         roomId = resJson.room_id;
@@ -77,6 +82,7 @@
     }
 
     async function stopMatching() {
+        // 매칭 되지 않은 매칭 요청 삭제
         document.getElementById("matchingStatus").innerText = "stop";
         res = await fetch(`/match?user_id=${getUserId()}`, {
             method: 'DELETE'
